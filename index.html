@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SayItNow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+  <style>
+
+ body {
+    font-family: 'Roboto', sans-serif;
+    background-image: url('https://es.t-mobile.com/sdscene7/is/image/Tmusprod/bg-476969-runway-5Gmap-3?ts=1676041701079&$digx-16x9-large$&dpr=off');
+background-size: cover; /* Hace que la imagen cubra todo el header */
+    background-position: center; /* Centra la imagen */
+    background-attachment: fixed; /* Hace que la imagen de fondo quede fija al hacer scroll */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+    background: none;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave para el header */
+    height: auto;
+}
+
+
+.title {
+    margin: 0;
+  font-family: "Righteous", sans-serif;
+    font-size: 75px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.slogan {
+  font-family: "Righteous", sans-serif;
+    font-size: 18px;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.menu {
+    margin-top: 200px; /* Ajustado para espacio adecuado */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    z-index: 500;
+    position: relative;
+}
+
+button {
+    width: 220%;
+  height: 60px;
+    max-width: 360px;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 10px;
+    background: white; 
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border: solid 1px;
+}
+
+button:hover {
+    background-color: black;
+    transform: scale(1.05);
+  color: #E20074;
+  border-color: #E20074;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus {
+    outline: none;
+}
+
+.opciones {
+    margin-top: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 500;
+}
+
+h2 {
+    color: white;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h2#label, h2#label2, h2#label3, h2#label4, h2#label5, h2#label6, h2#label7, h2#label8 {
+    display: none;
+}
+
+/* Estilos adicionales para los botones finales */
+button[id^="finalButton"], button[id^="finalButto"], button[id^="finalBut"] {
+    background-color: red;
+color: white; 
+    width: 250%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button[id^="finalButton"]:hover, button[id^="finalButto"]:hover {
+    background-color: red;
+}
+
+button[id^="finalButton"]:active, button[id^="finalButto"]:active {
+    transform: scale(0.98);
+}
+
+button[id^="finalButton"]:focus, button[id^="finalButto"]:focus {
+    outline: none;
+}
+
+
+/* Footer como barra fija en la parte inferior */
+.footer {
+    background-color: none; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: center;
+    padding: 10px 0; /* Espaciado pequeño */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 14px; /* Texto pequeño */
+    opacity: 0.8;
+    z-index: 1000; /* Aseguramos que el footer esté sobre otros elementos */
+}
+
+.footer p {
+    margin: 0;
+}
+
+span{
+color: #E20074;
+}
+
+
+#reloadButton {
+    position: absolute; /* Posición absoluta dentro del header */
+    top: 20px; /* Distancia desde la parte superior */
+    right: 20px; /* Distancia desde la parte derecha */
+    padding: 8px 15px;
+    background-color: white; /* Fondo verde */
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+  </style>
+ <script>
+    // Función genérica para mostrar nuevos botones y ocultar la sección actual
+    function toggleButtons(currentIds, nextIds) {
+      // Oculta todos los botones de la sección actual
+      currentIds.forEach(function(currentId) {
+        document.getElementById(currentId).style.display = 'none';
+      });
+      // Muestra todos los botones de la siguiente sección
+      nextIds.forEach(function(nextId) {
+        document.getElementById(nextId).style.display = 'inline-block';
+      });
+    }
+  </script>
+</head>
+<body>
+
+<div id="background">
+	<div id="overlay"></div>
+</div>
+
+ <header>
+   <input type="button" id="reloadButton" value="Home">
+    <div class="title">S<span>a</span>y.<span>i</span>t.<span>Now</span></div>
+    <div class="slogan">Tu Guia Para saber que decir, Cuando Decirlo</div>
+   
+</header>
+
+
+  <!-- Botón inicial -->
+  <div class="menu">
+  <button id="button1" onclick="toggleButtons(['button1', 'butto1', 'butt1', 'but1'], ['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'])">Facturacion y Pagos</button>
+  
+  <button id="butto1" onclick="toggleButtons(['button1', 'butto1', 'butt1', 'but1'], ['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'])">Servicio y Planes</button>
+    
+     <button id="butt1" onclick="toggleButtons(['button1', 'butto1', 'butt1', 'but1'], ['butt2', 'butt2_1', 'butt2_2', 'butt2_3', 'butt2_4'])">Ventas</button>
+    
+   <button id="but1" onclick="toggleButtons(['button1', 'butto1', 'butt1', 'but1'], ['but2', 'but2_1', 'but2_2', 'but2_3', 'but2_4', 'but2_5'])">Simuladores</button>
+    
+    
+  </div>
+    
+    <div class="opciones">
+    
+  <!-- Botones de la sección 2 -->
+  <button id="button2" onclick="toggleButtons(['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'], ['button3', 'button3_1', 'button3_2'])" style="display: none;">Facturas Altas</button>
+  <button id="button2_1" onclick="toggleButtons(['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'], ['button31', 'button3_3', 'button3_4', 'button3_5','button3_6'])" style="display: none;">Descuentos y Promos</button>
+  <button id="button2_2" onclick="toggleButtons(['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'], ['button32', 'button3_7', 'button3_8', 'button3_9'])" style="display: none;">Pago Fallido</button>
+  <button id="button2_3" onclick="toggleButtons(['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'], ['button33', 'button3_10', 'button3_11', 'button3_12'])" style="display: none;">Acuerdo de Pago</button>
+<button id="button2_4" style="display: none;" onclick="toggleButtons(['button2', 'button2_1', 'button2_2', 'button2_3', 'button2_4'], ['button1', 'butto1', 'butt1', 'but1'])">Inicio</button>
+  
+  <!-- Botones de la sección 3 factura alta-->
+  <button id="button3" onclick="toggleButtons(['button3', 'button3_1', 'button3_2'], ['finalButton', 'finalButton1', 'label'])" style="display: none;">Cargos Prorateados</button>
+  <button id="button3_1" onclick="toggleButtons(['button3', 'button3_1', 'button3_2'], ['finalButton2', 'finalButton3', 'label2'])" style="display: none;">Llamadas Internacionales</button>
+  <button id="button3_2" style="display: none;" onclick="toggleButtons(['button3', 'button3_1', 'button3_2'], ['button1', 'butto1', 'butt1', 'but1'])">Inicio</button>
+
+  <!-- Botones de la sección 3 descuetnos y promos-->
+<button id="button31" onclick="toggleButtons(['button31', 'button3_3', 'button3_4', 'button3_5', 'button3_6'], ['finalButton4', 'finalButton5'])" style="display: none;">Promo No Aplicada</button>
+  <button id="button3_3" onclick="toggleButtons(['button31', 'button3_3', 'button3_4', 'button3_5', 'button3_6'], ['finalButton6', 'finalButton7', 'label3'])" style="display: none;">Creditos no Validos</button>
+  <button id="button3_4" style="display: none;" onclick="window.open('https://c2.t-mobile.com/offers', '_blank')">Nuevas Promos</button>
+  <button id="button3_5" onclick="toggleButtons(['button31', 'button3_3', 'button3_4', 'button3_5', 'button3_6'], ['finalButton8', 'finalButton9'])" style="display: none;">Lineas Gratis</button>
+  <button id="button3_6" style="display: none;" onclick="toggleButtons(['button31', 'button3_3', 'button3_4', 'button3_5', 'button3_6'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+  
+ <!-- Botones de la sección 3 pago fallido-->
+<button id="button32" onclick="toggleButtons(['button32', 'button3_7', 'button3_8', 'button3_9'], ['finalButton10', 'finalButton11', 'label5'])" style="display: none;">No Autopay</button>
+  <button id="button3_7" onclick="toggleButtons(['button32', 'button3_7', 'button3_8', 'button3_9'], ['finalButton12', 'finalButton13', 'label5'])" style="display: none;">Backout Payment</button>
+  <button id="button3_8" onclick="toggleButtons(['button32', 'button3_7', 'button3_8', 'button3_9'], ['finalButton14', 'finalButton15', 'label6'])" style="display: none;">Fondos Insuficientes</button>
+  <button id="button3_9" style="display: none;" onclick="toggleButtons(['button32', 'button3_7', 'button3_8', 'button3_9'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+ <!-- Botones de la sección 3 Acauerdo de pago-->
+<button id="button33" onclick="toggleButtons(['button33', 'button3_10', 'button3_11', 'button3_12'], ['finalButton16', 'finalButton17', 'label7'])" style="display: none;">Pago Minimo</button>
+  <button id="button3_10" onclick="toggleButtons(['button33', 'button3_10', 'button3_11', 'button3_12'], ['finalButton18', 'finalButton19', 'label8'])" style="display: none;">no Editar P.A.</button>
+  <button id="button3_11" onclick="" style="display: none;">Agregar Metodo de Pago</button>
+  <button id="button3_12" style="display: none;" onclick="toggleButtons(['button33', 'button3_10', 'button3_11', 'button3_12'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+
+  <!-- Último botón cargos prorateados -->
+  <h2 id="label" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButton" style="display: none;" onclick="abrirEnlace1()">Si</button>
+  <button id="finalButton1" style="display: none;" onclick="abrirEnlace2()">No</button>
+  
+  <!-- Último botón llamadas internacionales -->
+   <h2 id="label2" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButton2" style="display: none;" onclick="abrirEnlace3()">Si</button>
+  <button id="finalButton3" style="display: none;" onclick="abrirEnlace4()">No</button>
+   
+ <!-- Último botón promo no aplicada -->
+  <button id="finalButton4" style="display: none;" onclick="abrirEnlace5()" >Promo Vencida</button>
+  <button id="finalButton5" style="display: none;" onclick="abrirEnlace6()" >Promo No existe</button>
+
+<!-- Último botón credito no validos -->
+ <h2 id="label3" style="display: none;">Cliente Enojado</h2>
+<button id="finalButton6" style="display: none;" onclick="abrirEnlace7()">Si</button>
+  <button id="finalButton7" style="display: none;" onclick="abrirEnlace8()">No</button>
+
+<!-- Último botónliena gratis -->
+<button id="finalButton8" style="display: none;" onclick="abrirEnlace9()">Se cayo la Promocion</button>
+  <button id="finalButton9" style="display: none;" onclick="abrirEnlace10()">No ha tenido Promocion</button>
+
+<!-- Último botón no autoopay -->
+<h2 id="label4" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButton10" style="display: none;" onclick="abrirEnlace11()">Si</button>
+  <button id="finalButton11" style="display: none;" onclick="abrirEnlace12()">No</button>
+  
+  <!-- Último botón backout payment -->
+<h2 id="label5" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButton12" style="display: none;" onclick="abrirEnlace13()">Si</button>
+  <button id="finalButton13" style="display: none;" onclick="abrirEnlace14()">No</button>
+  
+    <!-- Último botón fondos insuficientes -->
+<h2 id="label6" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButton14" style="display: none;" onclick="abrirEnlace15()">Si</button>
+  <button id="finalButton15" style="display: none;" onclick="abrirEnlace16()">No</button>
+
+   <!-- Último botón pago minimo -->
+<h2 id="label7" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButton16" style="display: none;" onclick="abrirEnlace17()">Si</button>
+  <button id="finalButton17" style="display: none;" onclick="abrirEnlace18()">No</button>
+
+   <!-- Último botón editar pa-->
+<h2 id="label8" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButton18" style="display: none;" onclick="abrirEnlace19()">Si</button>
+  <button id="finalButton19" style="display: none;" onclick="abrirEnlace20()">No</button>
+  
+
+
+
+  
+  
+
+<!--secciond 2-->
+ 
+  
+  
+  
+  <!-- Botones de la sección 2 -->
+  <button id="butto2" onclick="toggleButtons(['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'], ['butto3', 'butto3_1', 'butto3_2'])" style="display: none;">Planes</button>
+  <button id="butto2_1" onclick="toggleButtons(['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'], ['butto31', 'butto3_3', 'butto3_6'])" style="display: none;">Lineas</button>
+  <button id="butto2_2" onclick="toggleButtons(['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'], ['butto32', 'butto3_7', 'butto3_9'])" style="display: none;">Roaming</button>
+  <button id="butto2_3" onclick="toggleButtons(['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'], ['butto33', 'butto3_10', 'butto3_11', 'butto3_12'])" style="display: none;">Beneficios</button>
+<button id="butto2_4" style="display: none;" onclick="toggleButtons(['butto2', 'butto2_1', 'butto2_2', 'butto2_3', 'butto2_4'], ['button1', 'butto1', 'butt1', 'but1'])">Regresr</button>
+  
+  <!-- Botones de la sección 3 Planes-->
+  <button id="butto3" onclick="toggleButtons(['butto3', 'butto3_1', 'butto3_2'], ['finalButto', 'finalButto1', 'labe'])" style="display: none;">MRC Update</button>
+  <button id="butto3_1" onclick="toggleButtons(['butto3', 'butto3_1', 'butto3_2'], ['finalButto2', 'finalButto3', 'finalButtoo3'])" style="display: none;">Planes Especiales</button>
+  <button id="butto3_2" style="display: none;" onclick="toggleButtons(['butto3', 'butto3_1', 'butto3_2'], ['button1', 'butto1', 'butt1', 'but1'])">Regresr</button>
+
+  <!-- Botones de la sección 3 lineas-->
+<button id="butto31" onclick="toggleButtons(['butto31', 'butto3_3', 'butto3_6'], ['finalButto4', 'finalButto5', 'labe'])" style="display: none;">Cancelacion</button>
+  <button id="butto3_3" onclick="toggleButtons(['butto31', 'butto3_3', 'butto3_6'], ['finalButto6', 'finalButto7', 'labe3'])" style="display: none;">Linea no Reconocida</button>
+  <button id="butto3_6" style="display: none;" onclick="toggleButtons(['butto31', 'butto3_3', 'butto3_6'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+  
+ <!-- Botones de la sección 3 roaming-->
+<button id="butto32" onclick="toggleButtons(['butto32', 'butto3_7', 'butto3_9'], ['finalButto10', 'finalButto11', 'labe5'])" style="display: none;">No Funciona Roaming</button>
+  <button id="butto3_7" onclick="toggleButtons(['butto32', 'butto3_7', 'butto3_9'], ['finalButto12', 'finalButto13', 'labe5'])" style="display: none;">No funciona Data Pass</button>
+  <button id="butto3_9" style="display: none;" onclick="toggleButtons(['butto32', 'butto3_7', 'butto3_9'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+ <!-- Botones de la sección 3 beneficios-->
+<button id="butto33" onclick="toggleButtons(['butto33', 'butto3_10', 'butto3_11', 'butto3_12'], ['finalButto16', 'finalButto17', 'finalButto18'])" style="display: none;">Streaming</button>
+  <button id="butto3_10" onclick="" style="display: none;">AAA</button>
+  <button id="butto3_11" onclick="" style="display: none;">Scamshield</button>
+  <button id="butto3_12" style="display: none;" onclick="toggleButtons(['butto33', 'butto3_10', 'butto3_11', 'butto3_12'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+
+  <!--mrcupdate -->
+  <h2 id="labe" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButto" style="display: none;" onclick="abrirEnlace21()">si</button>
+  <button id="finalButto1" style="display: none;" onclick="abrirEnlace22()">no</button>
+  
+  <!-- palnes esoeciales-->
+ <button id="finalButtoo3" style="display: none;" onclick="abrirEnlace23()">MILITARY</button>
+  <button id="finalButto2" style="display: none;" onclick="abrirEnlace24()">55+</button>
+  <button id="finalButto3" style="display: none;" onclick="abrirEnlace25()">First Responder</button>
+   
+ <!-- Último botón promo no aplicada -->
+<h2 id="labe" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButto4" style="display: none;" onclick="abrirEnlace26()">Si</button>
+  <button id="finalButto5" style="display: none;" onclick="abrirEnlace27()">No</button>
+
+<!-- Último liena no reconocidas -->
+ <h2 id="labe3" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButto6" style="display: none;" onclick="abrirEnlace28()">siii</button>
+  <button id="finalButto7" style="display: none;" onclick="abrirEnlace29()">nooo</button>
+
+<!-- Úls Coded By Geovanni Ramos, Oracle ID: 7125016-->
+<button id="finalButto8" style="display: none;" onclick="abrirEnlace30()">se cayo la promo</button>
+  <button id="finalButto9" style="display: none;" onclick="abrirEnlace31()">no ha tenido promo</button>
+
+<!-- Último broaming -->
+<h2 id="labe4" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButto10" style="display: none;" onclick="abrirEnlace32()">Si</button>
+  <button id="finalButto11" style="display: none;" onclick="abrirEnlace33()">No</button>
+  
+  <!-- Último botón data passt -->
+<h2 id="labe5" style="display: none;">Cliente Enojado?</h2>
+<button id="finalButto12" style="display: none;" onclick="abrirEnlace34()">Si</button>
+  <button id="finalButto13" style="display: none;" onclick="abrirEnlace35()">No</button>
+  
+  <!-- Último botón streamingt -->
+  <button id="finalButto16" style="display: none;" onclick="abrirEnlace36()">Netflix</button>
+  <button id="finalButto17" style="display: none;" onclick="abrirEnlace37()">Apple TV</button>
+  <button id="finalButto18" style="display: none;" onclick="abrirEnlace38()">HULU</button>
+  
+  
+  
+  
+  
+  
+  
+<!-- Botón inicial -->
+
+ 
+  
+  
+  
+  <!-- Botones de la sección 3 -->
+  <button id="butt2" onclick="toggleButtons(['butt2', 'butt2_1', 'butt2_2', 'butt2_3', 'butt2_4'], ['butt3', 'butt3_2'])" style="display: none;">Trade In</button>
+  <button id="butt2_1" onclick="toggleButtons(['butt2', 'butt2_1', 'butt2_2', 'butt2_3', 'butt2_4'], ['butt31', 'butt3_3', 'butt3_5','butt3_6'])" style="display: none;">AAL</button>
+  <button id="butt2_2" onclick="toggleButtons(['butt2', 'butt2_1', 'butt2_2', 'butt2_3', 'butt2_4'], ['butt32', 'butt3_9'])" style="display: none;">P360</button>
+  <button id="butt2_3" onclick="" style="display: none;">Promos</button>
+<button id="butt2_4" style="display: none;" onclick="toggleButtons(['butt2', 'butt2_1', 'butt2_2', 'butt2_3', 'butt2_4'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+  
+  <!-- Botones de la sección 3 tarde in-->
+  <button id="butt3" onclick="abrirEnlace39()" style="display: none;">Como Posicionar</button>
+  <button id="butt3_2" style="display: none;" onclick="toggleButtons(['butt3', 'butt3_2'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+  <!-- Botones de la sección 3 AAL-->
+<button id="butt31" onclick="toggleButtons(['butt31', 'butt3_3', 'butt3_5', 'butt3_6'], ['finalButt4', 'finalButt5', 'tenure'])" style="display: none;">Solo Informacion</button>
+  <button id="butt3_3" onclick="toggleButtons(['butt31', 'butt3_3', 'butt3_5', 'butt3_6'], ['finalButt6', 'finalButt7', 'lab3'])" style="display: none;">Quiere Comprar</button>
+  <button id="butt3_5" onclick="" style="display: none;">Lineas Gratis</button>
+  <button id="butt3_6" style="display: none;" onclick="toggleButtons(['butt31', 'butt3_3', 'butt3_5', 'butt3_6'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+  
+ <!-- Botones de la sección 3 p360-->
+<button id="butt32" onclick="abrirEnlace49()" style="display: none;">Beneficios</button>
+  <button id="butt3_9" style="display: none;" onclick="toggleButtons(['butt32', 'butt3_9'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+
+
+  <!-- Último botón cargos prorateados -->
+  <h2 id="lab" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButt" style="display: none;">Si</button>
+  <button id="finalButt1" style="display: none;">No</button>
+  
+  <!-- Último botón llamadas internacionales -->
+   <h2 id="lab2" style="display: none;">Cliente Enojado?</h2>
+  <button id="finalButt2" style="display: none;">Si</button>
+  <button id="finalButt3" style="display: none;">No</button>
+   
+ <!-- Último botón info aal -->
+  <h2 id="tenure" style="display: none;">Es Tenure?</h2>
+  <button id="finalButt4" style="display: none;" onclick="abrirEnlace40()">Si</button>
+  <button id="finalButt5" style="display: none;" onclick="abrirEnlace41()">No</button>
+
+<!-- Último botón comprars -->
+ <h2 id="lab3" style="display: none;">Es Tenure</h2>
+<button id="finalButt6" style="display: none;" onclick="abrirEnlace42()">Si</button>
+  <button id="finalButt7" style="display: none;" onclick="abrirEnlace43()">No</button>
+  
+  
+  
+
+ <!-- Botones de la sección 3 -->
+  <button id="but2" onclick="abrirEnlace44()" style="display: none;">Bill</button>
+  <button id="but2_1" onclick="abrirEnlace45()" style="display: none;">Upgrades</button>
+  <button id="but2_2" onclick="abrirEnlace46()" style="display: none;">Roles and Permissions</button>
+  <button id="but2_3" onclick="abrirEnlace47()" style="display: none;">First Loging</button>
+  <button id="but2_4" onclick="abrirEnlace48()" style="display: none;">Settings</button>
+<button id="but2_5" style="display: none;" onclick="toggleButtons(['but2', 'but2_1', 'but2_2', 'but2_3', 'but2_4', 'but2_5'], ['button1', 'butto1', 'butt1', 'but1'])">Regresar</button>
+  </div>
+
+  
+  
+  <footer class="footer">
+    <p>&copy; 2025 SayitNow. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+
+        function abrirEnlace1() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+
+                        const prompts = [
+                "¿Cómo puedo estructurar una respuesta tranquila y profesional para explicarle a un cliente enojado, en una llamada de call center, por qué su factura es más alta debido a cargos prorrateados?",
+                "Dame una guía paso a paso para manejar una conversación con un cliente molesto que no entiende los cargos prorrateados en su factura, asegurando una experiencia positiva.",
+                "¿Cómo puedo validar la preocupación de un cliente enojado sobre su factura prorrateada y luego explicarle la situación de manera clara y sin confrontación?",
+                "Redacta un script de llamada que ayude a calmar a un cliente molesto y explicarle los cargos prorrateados en su factura, enfocándome en el valor del servicio.",
+                "Dame estrategias efectivas para evitar una escalación cuando un cliente está molesto por su factura prorrateada y necesita una explicación convincente en la llamada."
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace2() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message="; 
+
+            const prompts = [
+                "¿Cómo puedo explicar de manera clara y positiva a un cliente por qué su factura es más alta debido a cargos prorrateados, resaltando el valor del servicio?",
+                "Redacta un mensaje amigable para un cliente que pregunta sobre los cargos prorrateados en su factura, asegurando que la explicación sea fácil de entender.",
+                "Dame un script de llamada para explicar los cargos prorrateados en una factura a un cliente curioso, manteniendo un tono profesional y orientado al servicio.",
+                "¿Cómo puedo presentar los cargos prorrateados en una factura de manera que el cliente los perciba como parte de una transición normal en su servicio?",
+                "Redacta un correo formal pero cercano para un cliente que ha preguntado sobre los cargos prorrateados en su factura, enfatizando la transparencia y el excelente servicio."
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace3() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+
+            const prompts = [
+                "¿Cómo puedo explicar de manera clara y empática a un cliente enojado por los cargos de llamadas internacionales en su factura, sin que se sienta engañado?",
+                "Dame un script de llamada para calmar a un cliente molesto y explicarle detalladamente por qué se le han cobrado llamadas internacionales en su factura.",
+                "¿Cómo puedo validar la preocupación de un cliente enojado y luego explicarle de forma sencilla y profesional los cargos de llamadas internacionales en su factura?",
+                "Dame estrategias para manejar una conversación difícil con un cliente furioso por el cobro de llamadas internacionales, sin que la llamada se escale a una queja mayor.",
+                "Redacta una respuesta clara y conciliadora para explicar a un cliente molesto que los cargos de llamadas internacionales en su factura son correctos y cómo puede evitar costos adicionales en el futuro."
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace4() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+
+            const prompts = [
+                "¿Cómo puedo explicar de manera sencilla y profesional a un cliente que su factura incluye cargos por llamadas internacionales, resaltando la transparencia del servicio?",
+                "Redacta un mensaje claro y amigable para un cliente que pregunta por los cargos de llamadas internacionales en su factura, asegurando una experiencia positiva.",
+                "Dame un script de llamada para responder a un cliente que quiere entender los cargos por llamadas internacionales en su factura, manteniendo un tono cordial y profesional.",
+                "¿Cómo puedo presentar la información sobre cargos por llamadas internacionales en una factura de manera que el cliente la perciba como parte de una transición normal en su servicio?",
+                "Redacta un correo formal pero cercano para un cliente que ha solicitado información sobre los cargos de llamadas internacionales en su factura, asegurando transparencia y confianza."
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace5() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+
+            const prompts = [
+                "Dame tácticas para evitar una escalación cuando un cliente está molesto porque su promoción expiró, reforzando el compromiso con la satisfacción del cliente y posibles alternativas.",
+                "Redacta una respuesta efectiva para manejar una conversación difícil con un cliente que exige la aplicación de una promoción vencida, asegurando que se sienta escuchado y valorado.",
+                "¿Qué estrategias de comunicación puedo usar para validar la frustración de un cliente enojado y explicarle de forma transparente y positiva por qué no se aplicó su promoción?",
+                "Dame un script de llamada con frases profesionales y conciliadoras para calmar a un cliente molesto porque su promoción venció antes de que pudiera aplicarla.",
+                "¿Cómo puedo explicar de manera clara y empática a un cliente enojado que su promoción no se aplicó porque ya venció, asegurando que la conversación no escale y manteniendo una experiencia positiva?"
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+        function abrirEnlace6() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+
+            const prompts = [
+                "¿Cómo puedo explicar a un cliente enojado que la promoción que menciona nunca existió, sin que se sienta engañado y asegurando una experiencia positiva?",
+                "Dame un script de llamada para responder a un cliente molesto que afirma haber visto una promoción que no existe, manteniendo calma y profesionalismo.",
+                "¿Cómo puedo validar la preocupación de un cliente y explicarle de forma clara y respetuosa que la promoción que menciona no ha sido parte de nuestras ofertas?",
+                "Redacta una respuesta efectiva para manejar a un cliente frustrado que exige la aplicación de una promoción inexistente, asegurando que se sienta escuchado y valorado.",
+                "Dame estrategias para evitar una escalación cuando un cliente insiste en que una promoción es real, aunque no exista, reforzando la confianza en la información oficial."
+            ];
+
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+
+
+
+        function abrirEnlace7() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo explicarle a un cliente molesto que no podemos otorgarle el crédito o ajuste que solicita, sin que sienta que su reclamo es ignorado y reforzando nuestro compromiso con el servicio?",
+                "Dame un script de llamada para manejar la objeción de un cliente que exige un ajuste en su factura que no es válido, asegurando una comunicación profesional y empática.",
+                "¿Cómo puedo responder con empatía y claridad a un cliente enojado que insiste en recibir un crédito que no corresponde, sin que la conversación se torne confrontativa?",
+                "Redacta una respuesta efectiva para manejar a un cliente frustrado que insiste en obtener un ajuste no válido, asegurando que se sienta valorado y comprendido.",
+                "Dame estrategias para evitar una escalación cuando un cliente exige un crédito o ajuste que no se le puede otorgar, manteniendo una conversación orientada a soluciones y excelente servicio."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace8() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo explicar de manera profesional y clara a un cliente que no podemos otorgarle el crédito o ajuste que solicita, asegurando que se sienta escuchado y valorado?",
+                "Dame un script de llamada para explicar con tacto y transparencia a un cliente que su solicitud de ajuste no es válida, manteniendo una experiencia positiva.",
+                "¿Cómo puedo estructurar una conversación con un cliente que solicita un ajuste que no procede, asegurando que comprenda la política y siga teniendo una percepción positiva del servicio?",
+                "Redacta una respuesta profesional y cordial para un cliente que ha solicitado un crédito que no corresponde, asegurando claridad y una comunicación efectiva.",
+                "Dame estrategias para comunicarle a un cliente que no podemos procesar su ajuste sin afectar su percepción del servicio y asegurando que se sienta bien atendido."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace9() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo comunicarle a un cliente que perdió la promoción de línea gratis de manera empática y profesional? Por favor, incluye ejemplos de lenguaje amable.",
+                "Dame un guion para manejar a un cliente frustrado porque se cayó la promoción de línea gratis, manteniendo una actitud calmada, comprensiva y con un enfoque en soluciones.",
+                "¿Qué estrategias puedo usar para transformar una experiencia negativa de un cliente (como perder una promoción) en una oportunidad de fidelización? Por favor, incluye frases claves.",
+                "Escribe un correo o mensaje que pueda enviar a un cliente para explicarle que ya no puede acceder a la promoción de línea gratis, enfatizando empatía y alternativas atractivas.",
+                "Dame una guía paso a paso sobre cómo manejar una llamada con un cliente enojado, enfocado en resolver el problema de la pérdida de una promoción mientras mantengo un alto nivel de servicio al cliente."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace10() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para explicar de manera respetuosa y empática a un cliente que nunca tuvo acceso a la promoción que menciona, pero sigue molesto. Incluye ejemplos de frases tranquilizadoras.",
+                "¿Cómo puedo manejar una conversación con un cliente que insiste en que tenía una promoción que no existe, sin hacerlo sentir invalidado o aún más frustrado?",
+                "Escribe un mensaje o correo para responder a un cliente enojado que cree haber perdido una promoción que nunca tuvo, aclarando la situación con profesionalismo y empatía.",
+                "Dame estrategias para calmar a un cliente enojado que tiene una confusión sobre una promoción inexistente, y cómo guiar la conversación hacia una solución positiva.",
+                "¿Cómo responder de manera adecuada y empática a un cliente que está convencido de haber perdido una promoción que no tuvo, manteniendo la conversación enfocada y cortés?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace11() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para explicarle a un cliente enojado que su pago falló porque no tenía activado el autopago, con un enfoque empático y soluciones alternativas.",
+                "¿Cómo puedo manejar una conversación difícil con un cliente molesto porque su pago falló por falta de autopago activo, asegurándome de empatizar y ofrecer opciones claras?",
+                "Escribe un mensaje o correo profesional y empático para comunicarle a un cliente que el pago no se procesó porque no tenía activado el autopago, ofreciendo pasos para resolverlo.",
+                "Dame estrategias para calmar a un cliente frustrado por un pago fallido relacionado con la ausencia del autopago, y cómo convertir la experiencia en algo positivo.",
+                "¿Qué frases específicas y de apoyo puedo usar para explicarle a un cliente enojado que el pago no se completó porque no se había activado el autopago, sin que se sienta culpado o juzgado?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+        function abrirEnlace12() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para explicarle a un cliente de manera clara y amable que su pago no se procesó porque no tenía activado el autopago, junto con los pasos para activarlo.",
+                "¿Cómo puedo proporcionar información detallada a un cliente sobre por qué el autopago es útil y cómo puede activarlo, manteniendo un tono amigable y orientado al servicio?",
+                "Escribe un correo o mensaje breve pero profesional para notificar a un cliente que su pago no se completó y ofrecerle opciones para resolverlo sin complicaciones.",
+                "Dame consejos sobre cómo guiar a un cliente en una llamada para activar el autopago, asegurándome de ofrecer un excelente servicio al cliente.",
+                "¿Qué pasos puedo seguir para comunicarme con un cliente de manera proactiva sobre la importancia de activar el autopago, sin que parezca una presión o venta agresiva?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace13() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para explicarle a un cliente molesto que su banco regresó un pago realizado, con empatía y ofreciendo pasos claros para solucionar la situación.",
+                "¿Cómo puedo manejar una conversación con un cliente enojado debido a un backout payment, asegurándome de ser comprensivo y proactivo en la resolución del problema?",
+                "Escribe un mensaje profesional y amigable para notificarle a un cliente que el banco devolvió su pago, explicando las posibles causas y las acciones que puede tomar.",
+                "Dame estrategias para calmar a un cliente molesto por la devolución de un pago de su banco, incluyendo cómo ofrecer soluciones concretas y mantener una comunicación positiva.",
+                "¿Qué frases clave puedo usar para explicar de manera empática un backout payment a un cliente enojado, y cómo puedo reencaminar la situación hacia una solución?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+        function abrirEnlace14() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion paso a paso para manejar una llamada de servicio al cliente en la que se debe explicar que el banco devolvió un pago, manteniendo un tono profesional y asegurándome de proporcionar soluciones claras",
+                "Crea un flujo de conversación para una llamada de servicio al cliente que informe a un cliente sobre un backout payment, incluyendo frases clave para empatizar y pasos para resolver el problema",
+                "Escribe un script para una llamada de servicio al cliente que explique de manera clara y amable que un pago fue devuelto por el banco, y cómo apoyar al cliente para resolverlo.",
+                "Dame una guía detallada para una interacción telefónica con un cliente sobre un backout payment, incluyendo cómo anticipar preguntas y ofrecer una experiencia positiva en el servicio.",
+                "¿Cómo puedo estructurar una llamada de servicio al cliente para informar de manera proactiva a un cliente sobre un backout payment, con un enfoque en la resolución y en mantener la satisfacción del cliente?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+        function abrirEnlace15() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para manejar una llamada con un cliente muy enojado porque su tarjeta tiene fondos insuficientes y su pago falló. Incluye frases clave para calmarlo y pasos para resolver la situación.",
+                "¿Cómo puedo estructurar una conversación con un cliente molesto por un pago rechazado debido a falta de fondos en su tarjeta, asegurándome de mantener empatía y ofrecer opciones prácticas?",
+                "Escribe un flujo de conversación para una llamada difícil en la que un cliente está frustrado porque su tarjeta tiene fondos insuficientes y el pago no se procesó. Incluye un enfoque que ayude a tranquilizarlo y solucionar el problema.",
+                "Dame estrategias para manejar una llamada con un cliente muy molesto por un pago fallido debido a fondos insuficientes, asegurándome de no escalar su frustración y enfocándome en alternativas para resolverlo.",
+                "¿Qué lenguaje profesional y empático puedo usar en una llamada con un cliente enojado porque su tarjeta tiene fondos insuficientes y el pago fue rechazado? Incluye cómo guiar la conversación hacia una solución positiva."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+  
+  
+          function abrirEnlace16() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion paso a paso para explicar a un cliente de manera clara y profesional que su pago no se procesó debido a fondos insuficientes en su tarjeta, incluyendo soluciones para resolver la situación.",
+                "¿Cómo puedo estructurar una llamada de servicio al cliente para notificar a un cliente sobre un pago rechazado por fondos insuficientes, manteniendo un tono respetuoso y amable?",
+                "Escribe un flujo de conversación enfocado en informar a un cliente que su tarjeta tenía fondos insuficientes y el pago no se procesó, ofreciendo opciones de pago y manteniendo una experiencia positiva.",
+                "Dame una guía para manejar una interacción telefónica en la que se explique de manera proactiva y profesional que el pago falló por falta de fondos en la tarjeta, y cómo resolverlo rápidamente.",
+                "¿Qué frases específicas y enfoque puedo usar para guiar a un cliente sobre cómo resolver un pago fallido debido a fondos insuficientes, asegurándome de proporcionar un excelente servicio al cliente?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace17() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion para explicarle a un cliente molesto que, para realizar un acuerdo de pago, es necesario cumplir con un monto mínimo requerido, incluyendo frases empáticas y un enfoque en soluciones.",
+                "¿Cómo puedo estructurar una conversación telefónica con un cliente frustrado por el monto mínimo requerido para hacer un acuerdo de pago, asegurándome de mantener empatía y ofrecer alternativas claras?",
+                "Escribe un flujo de conversación para una llamada difícil en la que un cliente está molesto porque necesita cumplir con un pago mínimo para realizar un acuerdo. Incluye estrategias para calmarlo y guiarlo hacia una resolución.",
+                "Dame pasos específicos para manejar una llamada con un cliente enojado que quiere hacer un acuerdo de pago pero no quiere cumplir con el monto mínimo requerido, manteniendo profesionalismo y enfocándome en una solución positiva.",
+                "¿Qué lenguaje empático y profesional puedo usar para explicarle a un cliente molesto que el monto mínimo es indispensable para realizar el acuerdo de pago, y cómo puedo reconducir la conversación hacia una resolución satisfactoria?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace18() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion claro y profesional para explicar a un cliente que es necesario cumplir con un monto mínimo para realizar un acuerdo de pago, incluyendo las razones detrás de este requisito",
+                "¿Cómo puedo estructurar una llamada para informar a un cliente de manera amable sobre el monto mínimo requerido para un acuerdo de pago, y ofrecerle opciones para cumplirlo?",
+                "Escribe un flujo de conversación para una llamada en la que se explica a un cliente el monto mínimo necesario para un acuerdo de pago, manteniendo un tono positivo y orientado a soluciones.",
+                "Dame una guía paso a paso para manejar una llamada con un cliente que pregunta sobre el monto mínimo requerido para un acuerdo de pago, asegurándome de ofrecer un excelente servicio al cliente.",
+                "¿Qué frases y enfoque puedo usar para guiar a un cliente en una llamada sobre cómo cumplir con el monto mínimo necesario para un acuerdo de pago, de manera clara y profesional?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+  
+  
+  
+  
+        function abrirEnlace19() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame estrategias para calmar a un cliente frustrado porque no se puede editar ni eliminar un acuerdo de pago, destacando cómo guiarlo hacia una solución dentro de las posibilidades.",
+                "¿Qué lenguaje profesional y empático puedo usar para explicarle a un cliente enojado que, por políticas y limitaciones técnicas, su acuerdo de pago no se puede modificar ni eliminar?",
+                "Escribe un flujo de conversación para una llamada de servicio al cliente en la que se explique, con tacto, que no se puede eliminar ni modificar un acuerdo de pago debido a restricciones técnicas y normativas",
+                "¿Cómo puedo manejar una llamada difícil con un cliente enojado porque no se puede modificar un acuerdo de pago, asegurándome de mantener empatía y ofrecer alternativas dentro de las políticas existentes?",
+                "Dame un guion para explicar de manera empática y profesional a un cliente molesto que, debido a políticas internas y limitaciones técnicas, no es posible eliminar ni editar un acuerdo de pago."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+  
+  
+          function abrirEnlace20() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion paso a paso para explicar de manera amable y profesional que no es posible eliminar ni editar un acuerdo de pago debido a políticas y limitaciones técnicas.",
+                "¿Cómo puedo estructurar una llamada de servicio al cliente para informar a un cliente sobre las razones por las que no se puede modificar ni eliminar un acuerdo de pago, manteniendo una comunicación clara y respetuosa?",
+                "Escribe un flujo de conversación enfocado en informar al cliente, con un tono positivo, que no es posible editar ni eliminar un acuerdo de pago por razones técnicas y normativas.",
+                "Dame una guía detallada para manejar una llamada con un cliente que necesita información sobre las restricciones para eliminar o editar un acuerdo de pago, asegurándome de que se sienta bien atendido.",
+                "¿Qué lenguaje profesional y claro puedo usar para explicarle a un cliente que, debido a políticas y limitaciones técnicas, no se puede modificar ni eliminar un acuerdo de pago?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+
+
+        function abrirEnlace22() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Proporciona ideas de comunicación efectiva para explicar el incremento en tarifas mensuales por ajustes en MRC, garantizando claridad y empatía.",
+                "Genera un script profesional para llamar a clientes y explicarles el aumento de sus facturas debido a una actualización de MRC",
+                "¿Cómo puedo abordar inquietudes de clientes sobre un aumento en la factura vinculado a políticas de MRC y ofrecer soporte adicional?",
+                "Explícame cómo comunicar un aumento de factura a un cliente debido a actualizaciones de políticas y ajustes de MRC, manteniendo una comunicación clara y profesional.",
+                "Dame ejemplos de cómo explicar un ajuste de tarifa mensual a clientes enfocados en justificaciones de valor agregado y cambios de MRC"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+        function abrirEnlace21() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame estrategias para responder a un cliente molesto por un aumento en su factura causado por ajustes en políticas de MRC, manteniendo la calma y empatía",
+                "Proporciona ejemplos de respuestas profesionales para abordar las quejas de un cliente enojado por un incremento en su factura mensual debido a actualizaciones de MRC",
+                "¿Cómo puedo manejar una llamada difícil con un cliente furioso por un cambio en tarifas relacionadas con MRC, garantizando una resolución satisfactoria?",
+                "Genera un guion empático y profesional para hablar con clientes frustrados por un aumento en su factura debido a una actualización de MRC",
+                "Explícame cómo transformar una interacción negativa con un cliente molesto por ajustes de MRC en una oportunidad para generar confianza y solucionar el problema."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace23() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cuáles son los mejores beneficios que los planes telefónicos ofrecen para miembros del ejército y sus familias? Explícalo claramente.",
+                "Proporciona una descripción detallada de los planes telefónicos diseñados para personal militar, incluyendo tarifas, descuentos y servicios adicionales",
+                "Dame ejemplos de cómo las compañías telefónicas apoyan a los clientes militares con ofertas exclusivas o flexibilidad en sus planes.",
+                "¿Cómo se diferencian los planes telefónicos para militares de los planes estándar en términos de costo y características?",
+                "Explícame cómo comunicar a un cliente militar las ventajas de un plan telefónico especializado que satisfaga sus necesidades específicas."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace24() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Qué beneficios ofrecen los planes telefónicos para personas mayores de 55 años en términos de precios, características y servicios adicionales?",
+                "Dame ejemplos de planes telefónicos económicos y prácticos dirigidos a clientes de más de 55 años, incluyendo opciones de tarifas especiales",
+                "¿Cómo adaptan las compañías telefónicas sus servicios y planes para satisfacer las necesidades de personas mayores de 55 años?",
+                "Proporciona información sobre programas de descuento o promociones exclusivas para usuarios mayores de 55 años en servicios telefónicos.",
+                "Explícame cómo comunicar las ventajas y beneficios de un plan telefónico diseñado para personas mayores a un cliente potencial."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+        function abrirEnlace25() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cuáles son los principales beneficios que los planes telefónicos ofrecen a first responders, incluyendo descuentos y servicios exclusivos?",
+                "Dame ejemplos de planes telefónicos especializados para first responders que incluyan opciones de tarifas reducidas y características prioritarias.",
+                "¿Cómo apoyan las compañías telefónicas a first responders con planes diseñados para sus necesidades laborales y personales?",
+                "Proporciona información sobre programas y ofertas exclusivas de servicios telefónicos dirigidos a personal de emergencia, como bomberos, policías y paramédicos.",
+                "Explícame cómo comunicar las ventajas de un plan telefónico exclusivo para first responders, destacando el valor y los beneficios."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+
+
+        function abrirEnlace26() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame estrategias efectivas para retener a un cliente que está molesto y quiere cancelar su línea telefónica, manteniendo un enfoque profesional y empático.",
+                "¿Cómo puedo manejar una conversación difícil con un cliente insatisfecho para evitar la cancelación de su línea telefónica?",
+                "Proporciona ejemplos de respuestas que permitan convencer a un cliente enojado de que mantenga su línea, destacando beneficios y ofreciendo soluciones.",
+                "Explícame cómo estructurar una llamada para retener a un cliente molesto por problemas con su servicio, asegurándome de resolver sus inquietudes.",
+                "Dame ideas para ofrecer incentivos o beneficios atractivos que persuadan a un cliente enojado a no cancelar su línea."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace27() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame estrategias para resaltar los beneficios de nuestro servicio y persuadir a un cliente indeciso a mantener su línea activa.",
+                "Proporciona ideas para reforzar el valor de una línea telefónica y convencer a un cliente de no cancelarla sin presión o conflicto.",
+                "¿Cómo puedo destacar las ventajas y beneficios exclusivos de nuestro plan para que un cliente reconsidere su decisión de cancelación?",
+                "Genera un guion para explicar amablemente a un cliente las razones para permanecer en nuestro servicio, mostrando opciones que se ajusten a sus necesidades",
+                "Dame ejemplos de argumentos basados en beneficios y posibles soluciones que ayuden a un cliente a tomar la decisión de conservar su línea telefónica."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+
+
+
+
+        function abrirEnlace28() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame un guion empático para abordar la frustración de un cliente que reporta una línea telefónica no reconocida en su cuenta, y ofrecerle soluciones claras.",
+                "¿Cómo puedo mostrar preocupación genuina y ofrecer soporte inmediato a un cliente que está molesto por una línea no autorizada en su cuenta?",
+                "Proporciona estrategias para tranquilizar a un cliente enojado que reclama sobre una línea no reconocida, destacando empatía y compromiso para resolver el problema",
+                "Crea un ejemplo de comunicación profesional y empática para responder a un cliente insatisfecho por la aparición de una línea no añadida en su cuenta.",
+                "¿Cómo puedo manejar de forma efectiva y con empatía la queja de un cliente respecto a una línea no reconocida en su factura, asegurándome de brindarle confianza y soluciones?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace29() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo explicar de manera empática y clara a un cliente tranquilo por qué aparece una línea no reconocida en su cuenta, y qué pasos tomaremos para solucionarlo?",
+                "Proporciona ejemplos de comunicación profesional y comprensiva para responder a un cliente que reporta una línea desconocida sin estar molesto",
+                "¿Qué estrategias puedo utilizar para investigar y resolver el problema de una línea no reconocida en la cuenta de un cliente, manteniendo su confianza?",
+                "Crea un guion para abordar con amabilidad la consulta de un cliente sobre una línea no autorizada en su factura, asegurándome de que se sienta escuchado.",
+                "Dame ideas para proporcionar tranquilidad a un cliente al que le preocupa una línea no reconocida en su cuenta, sin que esté enojado"
+            ];
+ 
+           
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+           
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+           
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+
+
+        function abrirEnlace32() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo abordar la frustración de un cliente que está fuera del país y no tiene activado el roaming, ayudándole paso a paso a activarlo y verificando si está incluido en su plan?",
+                "Proporciona un guion empático para atender a un cliente enojado por problemas con el roaming en el extranjero, garantizando una solución rápida y clara",
+                "¿Qué estrategias puedo utilizar para tranquilizar a un cliente molesto por la falta de roaming, mientras le explico cómo activarlo y confirmo si su plan lo cubre?",
+                "Genera ejemplos de respuestas profesionales y empáticas para ayudar a un cliente enojado a solucionar la falta de roaming en su línea mientras está fuera del país.",
+                "Dame ideas para ofrecer un excelente servicio al cliente a alguien que enfrenta problemas con roaming en el extranjero, incluyendo verificación del plan y asistencia técnica"
+            ];
+ 
+           
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+           
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+           
+            window.open(urlCompleta, "_blank");
+        }
+
+
+
+
+
+        function abrirEnlace33() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo ayudar de manera clara y amable a un cliente que está fuera del país y tiene problemas con el roaming, explicándole cómo activarlo y verificando si su plan lo incluye?",
+                "Proporciona un guion profesional y cordial para asistir a un cliente que está en el extranjero y necesita ayuda para activar el roaming, asegurándome de revisar su plan.",
+                "¿Qué estrategias puedo utilizar para ofrecer soporte técnico y verificar la disponibilidad de roaming en el plan de un cliente tranquilo que está fuera del país?",
+                "Dame ejemplos de comunicación efectiva y empática para guiar a un cliente en la activación del roaming mientras está en el extranjero, manteniendo una experiencia positiva.",
+                "Explícame cómo estructurar una conversación profesional para atender a un cliente que está fuera del país y desea activar el roaming sin expresar molestia"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+
+  
+  
+  
+  
+  
+          function abrirEnlace34() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo empezar la conversación con un cliente enojado que dice que el Data Pass no está funcionando, mostrando empatía, validando su frustración y asegurándole que estoy aquí para ayudar?",
+                "Dame un guion para ofrecer una solución paso a paso cuando un cliente está molesto porque su Data Pass no está funcionando, sin hacer que se sienta culpable ni ignorado",
+                "¿Cómo le puedo decir a un cliente enojado que entiendo lo importante que es tener servicio en el extranjero y que voy a asegurarme de que el Data Pass funcione, sin que suene a excusa?",
+                "¿Cómo le doy instrucciones claras por teléfono para revisar si el roaming está activado correctamente en su dispositivo, sin usar jerga técnica, mientras sigo empatizando con su situación?",
+                "Dame una forma de asegurar a un cliente molesto que estoy haciendo todo lo posible para solucionar el problema del Data Pass, mientras lo mantengo tranquilo y le explico qué pasos estamos tomando para resolverlo."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace35() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo le explico a un cliente que está teniendo problemas con su Data Pass de manera empática, sin sonar técnico, y asegurándole que estamos trabajando para solucionar el problema?",
+                "¿Cómo puedo guiar a un cliente que no está enojado pero está confundido sobre cómo activar el roaming o verificar si su Data Pass está funcionando, de forma clara y amigable?",
+                "¿Cómo le hago saber a un cliente que entiendo su situación, que es frustrante no tener servicio en el extranjero, pero que podemos solucionarlo de forma tranquila y rápida?",
+                "¿Cómo puedo ofrecer al cliente opciones de solución cuando el Data Pass no está funcionando, como revisar configuración o restablecer conexiones, sin hacer que sienta que es su culpa?",
+                "¿Cómo puedo asegurarle a un cliente que el problema con su Data Pass está siendo resuelto, dándole la tranquilidad de que, si no se soluciona, seguiré ayudándole con otros pasos?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+          function abrirEnlace36() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "Dame los pasos detallados que debo explicarle a un cliente para activar el servicio de Netflix incluido en su plan telefónico, desde cero y sin asumir conocimientos técnicos.",
+                "¿Cuáles son los pasos que un cliente debe seguir para vincular su cuenta de Netflix con su línea telefónica y comenzar a usar el beneficio incluido en su plan?",
+                "Explícame paso a paso cómo guiar a un cliente para activar su cuenta de Netflix desde la app o portal del operador móvil, asegurando que el beneficio esté bien aplicado.",
+                "Dame una guía clara y ordenada para que un agente pueda ayudar por teléfono a un cliente a activar Netflix incluido en su plan, incluyendo cómo verificar si ya está activo.",
+                "¿Cuáles son los pasos completos que un cliente debe seguir para activar Netflix incluido en su plan móvil, tanto si es nuevo usuario como si ya tiene una cuenta de Netflix?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+  
+          function abrirEnlace37() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Puedes darme los pasos específicos que debo indicarle a un cliente para activar Apple TV+ como parte de su plan móvil, desde que recibe el beneficio hasta que puede ver contenido?",
+                "Explícame cómo guiar a un cliente que nunca ha usado Apple TV+ para que active el servicio incluido en su plan, sin confundirlo con otros servicios de Apple.",
+                "¿Qué debe hacer un cliente desde su dispositivo para redimir Apple TV+ como parte del beneficio que le ofrece su plan telefónico, incluyendo si es usuario nuevo o existente?",
+                "Dame una guía paso a paso que pueda seguir un agente para ayudar a un cliente por teléfono a activar Apple TV+ incluido en su línea, asegurando que se valide correctamente el beneficio.",
+                "¿Cuáles son las instrucciones claras que debo darle a un cliente que quiere activar Apple TV+ desde su celular, usando el portal o app del operador que ofrece el beneficio con el plan?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+        function abrirEnlace38() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cuáles son los pasos que debe seguir un cliente para activar Hulu incluido en su plan móvil, desde la recepción del beneficio hasta comenzar a ver contenido?",
+                "Explícame cómo orientar a un cliente que quiere activar Hulu como parte de su plan telefónico, considerando si ya tiene una cuenta o si necesita crear una nueva.",
+                "Dame una guía clara y sencilla para ayudar a un cliente por teléfono a activar el servicio de Hulu incluido en su plan, sin confundirlo con una suscripción pagada directa",
+                "¿Qué debe hacer un cliente paso a paso para redimir el beneficio de Hulu desde la app o sitio del operador móvil donde está incluido en su plan?",
+                "¿Puedes darme las instrucciones completas para que un cliente active Hulu a través de un enlace de activación enviado por el operador, incluyendo qué hacer si el enlace no funciona?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+  
+            function abrirEnlace39() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo explicar el programa de Trade-In a un cliente como una oportunidad de ahorro y no solo como una forma de deshacerse de su equipo viejo?",
+                "Dame frases efectivas para posicionar el Trade-In como un beneficio dentro de la renovación de equipo, enfocándome en el valor económico y la sostenibilidad.",
+                "¿Cómo puedo presentar el Trade-In como una forma inteligente de actualizar su dispositivo sin pagar el precio completo, sin sonar como una venta forzada?",
+                "¿Qué puntos clave debo mencionar al cliente para destacar por qué entregar su equipo actual a cambio de crédito es una decisión conveniente y segura?",
+                "Explícame cómo posicionar el programa de Trade-In durante una conversación con un cliente que duda si vale la pena entregar su teléfono viejo."
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+          function abrirEnlace40() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo presentarle a un cliente de muchos años la opción de agregar una línea nueva sin presionarlo, haciéndole ver que es un beneficio que vale la pena considerar aunque solo quería información?",
+                "Dame frases estratégicas para despertar el interés de un cliente leal que no quiere comprar ahora, mostrándole cómo una línea adicional puede ser útil para su familia o ahorrar a largo plazo",
+                "¿Cómo posiciono la oferta de una nueva línea como una recompensa por su fidelidad, en lugar de una venta más, en una conversación con un cliente que solo busca información?",
+                "Dame una forma empática y no invasiva de proponerle a un cliente antiguo que agregue una línea nueva, enfocándome en los beneficios exclusivos disponibles solo para clientes como él",
+                "¿Cómo puedo usar argumentos basados en confianza y antigüedad para que un cliente que no tiene intención de comprar considere agregar una nueva línea como un movimiento inteligente?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+          function abrirEnlace41() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo presentar la opción de agregar una línea nueva a un cliente que lleva poco tiempo con la compañía, enfocándome en beneficios inmediatos sin sonar insistente?",
+                "Dame frases efectivas para que un cliente nuevo, que solo está pidiendo información, vea el valor de aprovechar desde ahora los beneficios por agregar una línea adicional.",
+                "¿Cómo puedo despertar el interés de un cliente reciente para agregar otra línea, mostrándole que está aprovechando al máximo su nuevo plan sin presionarlo?",
+                "Dame una estrategia de conversación para que un cliente que apenas se unió a la compañía considere agregar una línea nueva como parte de su experiencia inicial positiva",
+                "¿Cómo posiciono una nueva línea como una extensión natural del servicio que el cliente acaba de contratar, destacando comodidad, ahorro o beneficios por activación temprana?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+          function abrirEnlace42() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo felicitar a un cliente de larga duración por su decisión de agregar una línea nueva y agradecerle sinceramente por su lealtad a la compañía, manteniendo un tono cálido y profesional?",
+                "Dame un mensaje que combine felicitación por su compra y un agradecimiento genuino por los años que lleva con nosotros, destacando que valoramos su confianza",
+                "¿Qué frases puedo usar para reconocer y celebrar la fidelidad de un cliente que ha decidido seguir creciendo con nosotros agregando una nueva línea o equipo?",
+                "Dame una forma empática y positiva de reforzar la relación con un cliente antiguo que está comprando, haciendo énfasis en que su lealtad no pasa desapercibida",
+                "¿Cómo puedo transmitir entusiasmo y agradecimiento a un cliente leal que acaba de tomar la decisión de comprar, haciéndolo sentir reconocido y especial?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+  
+          function abrirEnlace43() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo felicitar a un cliente nuevo por su decisión de agregar una línea o equipo y agradecerle por confiar en nosotros desde el inicio de su experiencia?",
+                "Dame un mensaje de bienvenida y agradecimiento para un cliente reciente que acaba de tomar la decisión de comprar, reforzando que eligió bien al confiar en nuestra compañía.",
+                "¿Qué puedo decirle a un cliente que lleva poco tiempo con nosotros para agradecerle su compra y hacerlo sentir que ya es parte importante de nuestra comunidad?",
+                "Dame frases cálidas y profesionales para celebrar la primera compra de un cliente nuevo, resaltando que estamos aquí para acompañarlo desde el principio.",
+                "¿Cómo puedo construir una experiencia positiva con un cliente nuevo que decidió comprar, haciéndole sentir que su decisión es valorada aunque lleve poco tiempo con nosotros?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace44() {
+            const enlaceBase = "https://tmobileusa-my.sharepoint.com/:b:/g/personal/steven_giron14_t-mobile_com1/EQ7mxbUySydBiaGsegNYhYoB5SaiX-X1qjue_vWNRf_p2Q?e=2HsIMU";
+ 
+            window.open(enlaceBase, "_blank");
+        }
+  
+  
+  
+          function abrirEnlace45() {
+            const enlaceBase = "https://tmobileusa-my.sharepoint.com/query?q=t%2Dlife&searchScope=all&id=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments%2FMicrosoft%20Teams%20Chat%20Files%2FT%2DLife%20Upgrades%2Epdf&listurl=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments&parentview=7";
+ 
+            window.open(enlaceBase, "_blank");
+        }
+  
+  
+          function abrirEnlace46() {
+            const enlaceBase = "https://tmobileusa-my.sharepoint.com/query?q=t%2Dlife&searchScope=all&id=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments%2FMicrosoft%20Teams%20Chat%20Files%2FT%2DLife%20Roles%20%26%20Permissions%2Epdf&listurl=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments&parentview=7";
+ 
+            window.open(enlaceBase, "_blank");
+        }
+  
+          function abrirEnlace47() {
+            const enlaceBase = "https://tmobileusa-my.sharepoint.com/query?q=t%2Dlife&searchScope=all&id=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments%2FMicrosoft%20Teams%20Chat%20Files%2FFirst%20Loging%20T%2DLife%2Epdf&listurl=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments&parentview=7";
+ 
+            window.open(enlaceBase, "_blank");
+        }
+  
+  
+          function abrirEnlace48() {
+            const enlaceBase = "https://tmobileusa-my.sharepoint.com/query?q=t%2Dlife&searchScope=all&id=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments%2FMicrosoft%20Teams%20Chat%20Files%2FT%2DLife%20Configuraciones%2Epdf&listurl=%2Fpersonal%2Fsteven%5Fgiron14%5Ft%2Dmobile%5Fcom1%2FDocuments&parentview=7";
+ 
+            window.open(enlaceBase, "_blank");
+        }
+  
+          function abrirEnlace49() {
+            const enlaceBase = "https://t-mobile.glean.com/chat?chatAgent=DEFAULT&message=";
+ 
+            const prompts = [
+                "¿Cómo puedo explicar de manera clara y convincente los beneficios del seguro P360, enfocándome en cómo cubre daños accidentales, robo y pérdida del dispositivo, y por qué es una opción valiosa para el cliente?",
+                "Dame una forma efectiva de presentar el seguro P360 como una protección completa para su dispositivo, destacando cómo cubre los riesgos más comunes como accidentes, robo o pérdida, sin ser demasiado técnico",
+                "¿Qué frases puedo usar para posicionar el seguro P360 como una forma accesible y confiable de proteger su dispositivo frente a los imprevistos más comunes, como daños accidentales o robo?",
+                "¿Cómo puedo hacer que un cliente vea el seguro P360 como una inversión inteligente para proteger su dispositivo, cubriendo daños accidentales, robo y pérdida, y dándole tranquilidad en caso de cualquier inconveniente?",
+                "¿Qué argumentos puedo utilizar para explicar que el seguro P360 es fácil de obtener, asequible y cubre las situaciones más frecuentes como daños accidentales, robo o pérdida, brindando seguridad a los clientes?"
+            ];
+ 
+            // Seleccionar un prompt aleatorio
+            const promptAleatorio = prompts[Math.floor(Math.random() * prompts.length)];
+            // Construir la URL con el prompt
+            const urlCompleta = `${enlaceBase}${encodeURIComponent(promptAleatorio)}`;
+ 
+            // Abrir la página en una nueva pestaña
+            window.open(urlCompleta, "_blank");
+        }
+  
+  
+
+    // Asegurémonos de que el evento se añade cuando el DOM está completamente cargado
+    document.addEventListener("DOMContentLoaded", function() {
+      const reloadButton = document.getElementById('reloadButton');
+
+      if (reloadButton) {
+        reloadButton.addEventListener('click', function() {
+          console.log("Recargando..."); // Verifica que este mensaje aparezca en la consola
+          location.reload();
+        });
+      } else {
+        console.log("Botón no encontrado");
+      }
+    });
+  </script>
+  </body>
+
+</html>
